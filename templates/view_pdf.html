@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View PDF</title>
+
+</head>
+<body>
+    <div class="pdf-container">
+        <img id="pdf-image" class="pdf-image" src="{{ url_for('change_page', filename=pdf_file, page_num=0) }}">
+        <div class="page-navigation">
+            {% if current_page > 1 %}
+                <a href="{{ url_for('change_page', filename=pdf_file, page_num=current_page) }}">Previous</a>
+            {% endif %}
+            {% if current_page < total_pages %}
+                <button onclick="nextPage()">Next</button>
+            {% endif %}
+        </div>
+    </div>
+    {% if current_page %}
+        <audio controls>
+        <source src="{{ url_for('static', filename='uploads/audio/book/page_' + (current_page-1)|string + '.mp3') }}" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    {% endif %}
+</body>
+</html>
