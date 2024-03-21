@@ -61,7 +61,7 @@ def main():
             filename = secure_filename(file.filename)
             file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             file.save(file_path)
-            convert_to_audio(filename)
+           # convert_to_audio(filename)
             pages = split_pdf(filename)
             return render_template('view_pdf.html', pdf_file=filename, current_page=1, pages=pages)
     return render_template('index.html')
@@ -93,8 +93,8 @@ def previous_page(filename, current_page):
 def next_page(filename, current_page):
     total_pages = len(os.listdir(os.path.join(app.config['UPLOAD_FOLDER'], 'split_pdfs')))
     next_page_num = min(current_page + 1, total_pages)
-    return redirect(url_for('view_pdf', filename=filename, current_page=next_page_num))
+    return redirect(url_for('view_pdf', filename=filename, current_page=next_page_num, total_pages=total_pages))
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    app.run(debug=True, port=5001)

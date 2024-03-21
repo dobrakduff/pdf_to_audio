@@ -4,6 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View PDF</title>
+    <style>
+        body {
+            background-color: #222; /* Set background color to dark */
+            color: #fff; /* Set text color to white */
+            text-align: center; /* Center align text */
+        }
+        .pdf-container {
+            display: flex; /* Use flexbox */
+            justify-content: center; /* Center content horizontally */
+            align-items: center; /* Center content vertically */
+            flex-wrap: wrap; /* Allow items to wrap */
+            max-width: 800px; /* Set maximum width */
+            margin: 0 auto; /* Center the container */
+        }
+        .pdf-image {
+            max-width: 100%; /* Ensure image doesn't exceed container width */
+        }
+        .page-navigation {
+            margin-top: 20px; /* Add some top margin */
+            display: flex; /* Use flexbox */
+            align-items: center; /* Center content vertically */
+        }
+        .page-navigation form {
+            margin: 0 10px; /* Add spacing between forms */
+        }
+        button {
+            background-color: #444; /* Dark background color for buttons */
+            color: #fff; /* Text color for buttons */
+            padding: 10px 20px; /* Add padding */
+            border: none; /* Remove border */
+            cursor: pointer; /* Change cursor to pointer */
+        }
+        button:disabled {
+            opacity: 0.5; /* Reduce opacity for disabled buttons */
+            cursor: not-allowed; /* Change cursor for disabled buttons */
+        }
+    </style>
 </head>
 <body>
     <div class="pdf-container">
@@ -12,13 +49,13 @@
             <form action="{{ url_for('previous_page', filename=pdf_file, current_page=current_page) }}" method="POST">
                 <button type="submit" {% if current_page == 1 %}disabled{% endif %}>Previous</button>
             </form>
-            {{ current_page }} / {{ total_pages }}
+            {{ current_page }}
             <form action="{{ url_for('next_page', filename=pdf_file, current_page=current_page) }}" method="POST">
                 <button type="submit" {% if current_page == total_pages %}disabled{% endif %}>Next</button>
             </form>
         </div>
     </div>
-        <audio controls>
+    <audio controls>
         <source src="{{ url_for('static', filename='uploads/audio/book/page_' + (current_page-1)|string + '.mp3') }}" type="audio/mpeg">
             Your browser does not support the audio element.
         </audio>
